@@ -53,17 +53,22 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
 
-      - name: Docker Save
-        run: |
-          docker images
-          docker save demo > demo.tar
-
-      - name: Output docker image
-        uses: actions/upload-artifact@v2
+      - name: Upload image
+        uses: ishworkh/docker-image-artifact-upload@v1
         with:
-          name: docker-image
-          path: demo.tar
-          retention-days: 90
+          image: "demo:latest"
+
+      # - name: Docker Save
+      #   run: |
+      #     docker images
+      #     docker save demo > demo.tar
+
+      # - name: Output docker image
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: docker-image
+      #     path: demo.tar
+      #     retention-days: 90
 
       # Used to stop cache data filling up the Github runner with old cache data
       - name: Move cache
