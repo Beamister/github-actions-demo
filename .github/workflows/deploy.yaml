@@ -22,7 +22,7 @@ jobs:
           destination_dir: ''
 
   build-container:
-    name: Build Containerr
+    name: Build Container
     runs-on: ubuntu-latest
     steps:
       - name: Cache Docker layers
@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          file: Dockerfile
+          file: dockerfile
           context: .
           tags: demo:latest
           builder: ${{ steps.buildx.outputs.name }}
