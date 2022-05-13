@@ -28,14 +28,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
-
-      # - name: Cache Docker layers
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: /tmp/.buildx-cache
-      #     key: ${{ runner.os }}-single-buildx-${{ github.sha }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-single-buildx
       
       - name: Set up Docker Buildx
         id: buildx
@@ -50,29 +42,9 @@ jobs:
           context: .
           tags: "demo:latest"
           builder: ${{ steps.buildx.outputs.name }}
-          # cache-from: type=local,src=/tmp/.buildx-cache
-          # cache-to: type=local,dest=/tmp/.buildx-cache-new
           load: true
 
       - name: Upload image
         uses: ishworkh/docker-image-artifact-upload@v1
         with:
           image: "demo:latest"
-
-      # - name: Docker Save
-      #   run: |
-      #     docker images
-      #     docker save demo > demo.tar
-
-      # - name: Output docker image
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: docker-image
-      #     path: demo.tar
-      #     retention-days: 90
-
-      # Used to stop cache data filling up the Github runner with old cache data
-      # - name: Move cache
-      #   run: |
-      #     rm -rf /tmp/.buildx-cache
-      #     mv /tmp/.buildx-cache-new /tmp/.buildx-cache
